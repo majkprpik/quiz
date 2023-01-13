@@ -12,7 +12,10 @@ export class QuestionsService {
   public quiz:BehaviorSubject<Quiz> = new BehaviorSubject<Quiz>({
     id:0,
     pin:'',
-    players:[]
+    players:[],
+    questions:[],
+    strated:false,
+    ended:false,
   });
 
   constructor(private http: HttpClient,@Inject('BASE_URL') baseUrl:string ) { 
