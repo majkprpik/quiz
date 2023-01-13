@@ -59,7 +59,6 @@ public class QuizService : IQuizService
         var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         player.Token = token;
 
-
         if (quiz == null)
         {
             return null;
