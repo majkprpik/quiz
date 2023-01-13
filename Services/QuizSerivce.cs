@@ -2,12 +2,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using BCrypt.Net;
 using Lib.AspNetCore.ServerSentEvents;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using WebApi.HostedServices;
 
 public interface IQuizService
 {
@@ -25,15 +21,15 @@ public class QuizService : IQuizService
     private readonly IMapper _mapper;
     private readonly IServerSentEventsService _client;
     protected readonly IConfiguration Configuration;
-    // private readonly HttpClient httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
 
-    public QuizService(DataContext context, IMapper mapper, IServerSentEventsService client, IConfiguration configuration)
+    public QuizService(DataContext context, IMapper mapper, IServerSentEventsService client, IConfiguration configuration, IHttpClientFactory httpClientFactory)
     {
         _context = context;
         _mapper = mapper;
         _client = client;
         Configuration = configuration;
-        // httpClient = httpClient;
+        _httpClientFactory = httpClientFactory;
     }
 
     public async Task<string> AddNewPlayer(string username, string pin)
@@ -100,8 +96,19 @@ public class QuizService : IQuizService
         quiz.Started = true;
         quiz.Pin = GenerateRandomNo().ToString();
 
-        // 
-        // var questions = await this.httpClient.GetStringAsync("https://the-trivia-api.com/api/questions?limit=20&region=HR&difficulty=easy");
+        var httpClient = _httpClientFactory.CreateClient();
+
+        var questions = await httpClient.GetStringAsync("https://the-trivia-api.com/api/questions?limit=20&region=HR&difficulty=easy");
+  
+
+        // if (questions.IsSuccessStatusCode)
+        // {
+        //     using var contentStream =
+        //         await httpResponseMessage.Content.ReadAsStreamAsync();
+            
+        //     GitHubBranches = await JsonSerializer.DeserializeAsync
+        //         <IEnumerable<GitHubBranch>>(contentStream);
+        // }
 
         // List<QuestionFromTriviaDTO> addressList = JsonConvert.DeserializeObject<List<Address>>(questions);
         

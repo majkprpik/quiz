@@ -15,7 +15,7 @@ export class SSEService {
 
   initSSE() {
     let source = new EventSource(this.baseUrl + 'sse/rn-updates');
-    source.onmessage = (event: any) => {
+    source.onmessage = (event) => {
       if (event.data === 'keep-alive') return;
       let data = event.data.split(':');
       let type = data[0];
@@ -50,6 +50,12 @@ export class SSEService {
     };
     source.addEventListener('message', (message) => {
       console.log(message);
+    });
+  }
+
+  sendTest() {
+    this.http.post(this.baseUrl + 'api/Quiz/AddNewPlayer?username=asdf&pin=996640285', {}).subscribe((res) => {
+      console.log(res);
     });
   }
 }

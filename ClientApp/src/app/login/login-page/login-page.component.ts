@@ -1,6 +1,7 @@
 import { QuestionsService } from './../../services/questions.service';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { SSEService } from 'src/app/services/sse.service';
 
 @Component({
   selector: 'app-login-page',
@@ -13,7 +14,7 @@ export class LoginPageComponent implements OnInit {
   public pin:string=''
   private subs: Subscription=new Subscription();
 
-  constructor(private questionsService: QuestionsService) { 
+  constructor(private questionsService: QuestionsService, private sseService:SSEService){ 
     this.subs.add(
       this.questionsService.quiz.subscribe(quiz=>{
         console.log(quiz);
@@ -26,6 +27,10 @@ export class LoginPageComponent implements OnInit {
 
   startQuiz(){
     this.questionsService.startNewQuiz();
+  }
+
+  test() {
+    this.sseService.sendTest();
   }
 
   ngOnInit(): void {
