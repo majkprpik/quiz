@@ -1,3 +1,4 @@
+import { GameScreenComponent } from './game-screen/game-screen.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +10,7 @@ import { LoginPageComponent } from './login/login-page/login-page.component';
 
 const routes: Routes = [
   {path: '', component: LoginPageComponent},
+  {path: 'quiz', component: GameScreenComponent}
 ]
 
 
@@ -18,6 +20,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     LoginPageComponent,
+    GameScreenComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
