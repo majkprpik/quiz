@@ -44,6 +44,14 @@ public class QuizController : ApiBase
         return Ok(success);
     }
 
+        [HttpPost]
+    public async Task<IActionResult> SubmitAnswer(string token, string answer)
+    {
+        var success = await _quizService.SubmitAnswer(token, answer);
+
+        return Ok(success);
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddNewPlayer(string username, string pin)
     {

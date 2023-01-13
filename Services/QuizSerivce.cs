@@ -6,6 +6,7 @@ using AutoMapper.QueryableExtensions;
 using BCrypt.Net;
 using Lib.AspNetCore.ServerSentEvents;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using WebApi.HostedServices;
 
 public interface IQuizService
@@ -24,6 +25,7 @@ public class QuizService : IQuizService
     private readonly IMapper _mapper;
     private readonly IServerSentEventsService _client;
     protected readonly IConfiguration Configuration;
+    // private readonly HttpClient httpClient;
 
     public QuizService(DataContext context, IMapper mapper, IServerSentEventsService client, IConfiguration configuration)
     {
@@ -31,6 +33,7 @@ public class QuizService : IQuizService
         _mapper = mapper;
         _client = client;
         Configuration = configuration;
+        // httpClient = httpClient;
     }
 
     public async Task<string> AddNewPlayer(string username, string pin)
@@ -96,6 +99,24 @@ public class QuizService : IQuizService
 
         quiz.Started = true;
         quiz.Pin = GenerateRandomNo().ToString();
+
+        // 
+        // var questions = await this.httpClient.GetStringAsync("https://the-trivia-api.com/api/questions?limit=20&region=HR&difficulty=easy");
+
+        // List<QuestionFromTriviaDTO> addressList = JsonConvert.DeserializeObject<List<Address>>(questions);
+        
+        // XmlDocument xmlDoc = new XmlDocument();
+        // xmlDoc.LoadXml(events);
+
+        // var htmlDoc = new HtmlDocument();
+        // htmlDoc.LoadHtml(events);
+
+        // var name = htmlDoc.DocumentNode
+        //     .SelectNodes("//table[@id='main_calendar']")
+        //     .First();
+        //     // .Attributes["value"].Value;
+
+        // System.Console.WriteLine(events);
 
         _context.Quizzes.Add(quiz);
         await _context.SaveChangesAsync();
