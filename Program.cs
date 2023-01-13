@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+using Lib.AspNetCore.ServerSentEvents;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,21 +11,47 @@ builder.Services.AddControllersWithViews();
     var services = builder.Services;
     var env = builder.Environment;
 
-    services.AddDbContext<DataContext>();
-    
+    services.AddControllers().AddJsonOptions(x =>
+    {
+        // serialize enums as strings in api responses (e.g. Role)
+        x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+        // ignore omitted parameters on models to enable optional params (e.g. User update)
+        x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
+
     services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-     services.AddCors();
+    services.AddDbContext<DataContext>();
+    services.AddScoped<IQuizService, QuizService>();
+
+    services.AddControllersWithViews()
+        .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+    services.AddCors();
 }
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
  {
-    
+
  });
+
+builder.Services.AddServerSentEvents(options =>
+{
+    options.OnClientConnected = (service, clientConnectedArgs) =>
+    {
+        service.AddToGroup("", clientConnectedArgs.Client);
+    };
+    options.OnClientDisconnected = (service, clientConnectedArgs) =>
+    {
+        service.AddToGroup("", clientConnectedArgs.Client);
+    };
+});
 
 var app = builder.Build();
 
+app.MapServerSentEvents("sse/rn-updates");
 
 if (app.Environment.IsDevelopment())
 {
@@ -47,6 +76,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html"); ;
 
 app.Run();
