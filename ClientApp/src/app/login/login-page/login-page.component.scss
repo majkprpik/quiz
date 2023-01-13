@@ -2,14 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #535353;
+  background-color: #daff34;
   height: 100vh;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
   font-kerning: 10;
 
   .title {
-    color: white;
+    color: rgb(33, 42, 121);
     font-size: 80px;
     width: 100%;
     margin-top: 85px;
@@ -17,7 +17,7 @@
   .start {
     font-family: Arial, Helvetica, sans-serif;
     text-decoration: underline;
-    color: white;
+    color: rgb(33, 42, 121);
     font-weight: 250px;
     font-size: 60px;
     margin-top: 80px;
@@ -25,14 +25,14 @@
   .pin {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 40px;
-    color: white;
+    color: rgb(33, 42, 121);
     font-weight: lighter;
     margin-top: 120px;
   }
   .pin-holder {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 40px;
-    color: rgb(0, 0, 0);
+    color: rgb(33, 42, 121);
     font-weight: 30px;
     border: 5px solid white;
     border-radius: 10px;
@@ -49,7 +49,7 @@
     display: flex;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 40px;
-    color: white;
+    color: rgb(33, 42, 121);
     font-weight: 40px;
     position: relative;
   }
@@ -62,7 +62,7 @@
     top: 30px;
     right: -2px;
     position: relative;
-    border: 5px solid white;
+    border: 5px solid rgb(33, 42, 121);
     border-radius: 10px;
     background-color: white;
     border-left: 50px;
