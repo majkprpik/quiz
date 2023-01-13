@@ -47,7 +47,7 @@ public class QuizService : IQuizService
                 new Claim("quizId", quiz.Id.ToString()),
             };
 
-        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(""));
+        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("test"));
         var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
         var tokenOptions = new JwtSecurityToken(
