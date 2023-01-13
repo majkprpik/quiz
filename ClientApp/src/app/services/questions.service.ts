@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Quiz } from '../models/quiz';
 
@@ -18,7 +19,7 @@ export class QuestionsService {
     ended:false,
   });
 
-  constructor(private http: HttpClient,@Inject('BASE_URL') baseUrl:string ) { 
+  constructor(private http: HttpClient,@Inject('BASE_URL') baseUrl:string ,private router: Router) { 
     this.baseUrl=baseUrl;
   }
 
@@ -45,8 +46,10 @@ export class QuestionsService {
     })
   }
   startMatch(){
-    this.http.get(this.baseUrl+'/api/Quiz/StartQuiz?quizId='+this.quiz.value.id).subscribe(res=>{
-      console.log(res);
+    this.http.get(this.baseUrl+'api/Quiz/StartQuiz?quizId='+this.quiz.value.id).subscribe(res=>{
+      if(res && this.quiz.value.pin !==''){
+        this.router.navigate(['/quiz']);
+      }
       
     })
   }

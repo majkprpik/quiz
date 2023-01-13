@@ -25,8 +25,12 @@ export class LoginPageComponent implements OnInit {
     )
   }
 
-  startQuiz(){
+  getNewPin(){
     this.questionsService.getNewPin();
+  }
+
+  startQuiz(){
+   this.questionsService.startMatch()
   }
 
   test() {
