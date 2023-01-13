@@ -14,6 +14,7 @@ public interface IQuizService
     Task<bool> StartQuiz(int quizId);
     Task<string> AddNewPlayer(string username, string pin);
     Task<bool> SubmitAnswer(string token, string answer);
+    Task<bool> NextQuestion(int quizId);
     Task<bool> EndQuiz(int quizId);
 }
 
