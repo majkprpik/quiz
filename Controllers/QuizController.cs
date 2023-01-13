@@ -5,11 +5,11 @@ namespace quiz.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class QuizForecastController : ApiBase
+public class QuizController : ApiBase
 {
     private readonly IQuizService _quizService;
 
-    public QuizForecastController(IQuizService quizService)
+    public QuizController(IQuizService quizService)
     {
         _quizService = quizService;
     }
