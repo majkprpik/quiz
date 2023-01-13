@@ -21,6 +21,7 @@ namespace quiz.Helpers
                                 {
                                     Id = a.Id,
                                     AnswerText = a.AnswerText,
+                                    AnswerLetter = a.AnswerLetter,
                                     IsCorrect = a.IsCorrect
                                 }
                             ).ToList()
@@ -49,6 +50,7 @@ namespace quiz.Helpers
                     {
                         Id = a.Id,
                         AnswerText = a.AnswerText,
+                        AnswerLetter = a.AnswerLetter,
                         IsCorrect = a.IsCorrect
                     }
                 )));
@@ -56,6 +58,7 @@ namespace quiz.Helpers
             CreateMap<Answer, AnswerDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.AnswerText, opt => opt.MapFrom(src => src.AnswerText))
+                .ForMember(dest => dest.AnswerLetter, opt => opt.MapFrom(src => src.AnswerLetter))
                 .ForMember(dest => dest.IsCorrect, opt => opt.MapFrom(src => src.IsCorrect));
         }
     }
