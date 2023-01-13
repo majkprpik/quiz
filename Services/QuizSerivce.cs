@@ -44,6 +44,7 @@ public class QuizService : IQuizService
 
         await _context.SaveChangesAsync();
 
+        _client.SendEventAsync("new-player: " + quiz.Id, ":username: " + player.Username);
 
         return player.Token;
     }
