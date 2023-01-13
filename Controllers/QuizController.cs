@@ -8,7 +8,8 @@ namespace quiz.Controllers;
 public class QuizForecastController : ApiBase
 {
     // [HttpGet]
-    // public async Task<IActionResult> StartNewQuiz() { 
-
+    // public async Task<IActionResult> NewQuiz()
+    // {
+       
     // }
 }
