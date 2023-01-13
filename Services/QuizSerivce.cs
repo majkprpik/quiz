@@ -5,7 +5,7 @@ public interface IQuizService
 {
     Task<QuizDTO> NewQuiz();
     Task<bool> StartQuiz(int quizId);
-    Task<string> AddNewPlayer(string username, int quizId);
+    Task<string> AddNewPlayer(string username, string pin);
     Task<bool> SubmitAnswer(int quizId, string token, string answer, int questionId);
     Task<bool> EndQuiz(int quizId);
 }
@@ -22,15 +22,25 @@ public class QuizService : IQuizService
         _mapper = mapper;
     }
 
-    public async Task<string> AddNewPlayer(string username, int quizId)
+    public async Task<string> AddNewPlayer(string username, string pin)
     {
         var player = new Player();
 
         player.Username = username;
         player.Token = Guid.NewGuid().ToString();
 
-        _context.Players.Add(player);
+        var quiz = _context.Quizzes.FirstOrDefault(x => x.Pin == pin);
+        
+        if (quiz == null)
+        {
+            return null;
+        }
+        else {
+            quiz.Players.Add(player);
+        }
+
         await _context.SaveChangesAsync();
+
 
         // TODO send sse to front for new player
 
@@ -89,8 +99,8 @@ public class QuizService : IQuizService
     //Generate RandomNo
     public int GenerateRandomNo()
     {
-        int _min = 1000;
-        int _max = 9999;
+        int _min = 100000000;
+        int _max = 999999999;
         Random _rdm = new Random();
         return _rdm.Next(_min, _max);
     }
