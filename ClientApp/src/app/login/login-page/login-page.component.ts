@@ -26,7 +26,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   startQuiz(){
-    this.questionsService.startNewQuiz();
+    this.questionsService.getNewPin();
   }
 
   test() {

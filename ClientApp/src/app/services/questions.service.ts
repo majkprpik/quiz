@@ -22,14 +22,14 @@ export class QuestionsService {
   addNewPlayer(id:number,username:string){
 
     
-    if(this.quiz.value.id===id){
+    if(this.quiz.value.id===+id){
       let temp=this.quiz.value;
       temp.players.push(username);
       this.quiz.next(temp);
     }
   }
 
-  startNewQuiz(){
+  getNewPin(){
     this.http.get<Quiz>(this.baseUrl +'api/Quiz/NewQuiz').subscribe(res=>{
      
       if(res){
@@ -41,5 +41,13 @@ export class QuestionsService {
       
     })
   }
+  startMatch(){
+    this.http.get(this.baseUrl+'/api/Quiz/StartQuiz?quizId='+this.quiz.value.id).subscribe(res=>{
+      console.log(res);
+      
+    })
+  }
+
+
 
 }
