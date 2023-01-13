@@ -1,9 +1,35 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, Inject } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Quiz } from '../models/quiz';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionsService {
 
-  constructor() { }
+  private baseUrl:string='';
+  public quiz:BehaviorSubject<Quiz> = new BehaviorSubject<Quiz>({
+    id:0,
+    pin:'',
+    players:[]
+  });
+
+  constructor(private http: HttpClient,@Inject('BASE_URL') baseUrl:string ) { 
+    this.baseUrl=baseUrl;
+  }
+
+  startNewQuiz(){
+    this.http.get<Quiz>(this.baseUrl +'api/Quiz/NewQuiz').subscribe(res=>{
+     
+      if(res){
+        this.quiz.next(res)
+      }else{
+        console.log('error');
+        
+      }
+      
+    })
+  }
+
 }
