@@ -3,8 +3,6 @@ using quiz.Helpers;
 
 namespace quiz.Controllers;
 
-[ApiController]
-[Route("[controller]")]
 public class QuizController : ApiBase
 {
     private readonly IQuizService _quizService;
