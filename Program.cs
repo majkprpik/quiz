@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Lib.AspNetCore.ServerSentEvents;
+using WebApi.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,7 @@ builder.Services.AddSwaggerGen(options =>
      options.CustomSchemaIds(type => type.FullName);
  });
 
+
 builder.Services.AddServerSentEvents(options =>
 {
     options.OnClientConnected = (service, clientConnectedArgs) =>
@@ -48,6 +50,8 @@ builder.Services.AddServerSentEvents(options =>
         service.AddToGroup("", clientConnectedArgs.Client);
     };
 });
+
+builder.Services.AddHostedService<ServerEventsWorker>();
 
 var app = builder.Build();
 
