@@ -44,7 +44,7 @@ public class QuizService : IQuizService
 
         await _context.SaveChangesAsync();
 
-        _client.SendEventAsync("new-player: " + quiz.Id, ":username: " + player.Username);
+        await _client.SendEventAsync("new-player:" + quiz.Id, ":username:" + player.Username);
 
         return player.Token;
     }
@@ -57,6 +57,8 @@ public class QuizService : IQuizService
 
         _context.Quizzes.Update(quiz);
         await _context.SaveChangesAsync();
+
+        await _client.SendEventAsync("end-quiz:" + quiz.Id);
 
         return true;
     }
@@ -83,19 +85,21 @@ public class QuizService : IQuizService
         _context.Quizzes.Update(quiz);
         
         await _context.SaveChangesAsync();
+        
+        await _client.SendEventAsync("start-quiz:" + quiz.Id);
 
         return true;
     }
 
-    public Task<bool> SubmitAnswer(int quizId, string token, string answer, int questionId)
+    public async Task<bool> SubmitAnswer(int quizId, string token, string answer, int questionId)
     {
         var player = _context.Players.FirstOrDefault(x => x.Token == token);
         var quiz = _context.Quizzes.Find(quizId);
         var question = _context.Questions.Find(questionId);
 
-        // TODO send to sse for frontend to update
+        await _client.SendEventAsync("answer:" + quiz.Id, ":username:" + player.Username + ":answer:" + answer);
 
-       return Task.FromResult(true);
+       return true;
     }
 
     //Generate RandomNo
