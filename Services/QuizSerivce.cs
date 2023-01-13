@@ -70,7 +70,7 @@ public class QuizService : IQuizService
 
         await _context.SaveChangesAsync();
 
-        await _client.SendEventAsync("new-player:" + quiz.Id, ":username:" + player.Username);
+        await _client.SendEventAsync("new-player:" + quiz.Id + ":username:" + player.Username);
 
         return player.Token;
     }
@@ -157,7 +157,7 @@ public class QuizService : IQuizService
     {
         var player = _context.Players.FirstOrDefault(x => x.Token == token);
 
-        await _client.SendEventAsync("answer:" + "quizId:" + player.Quiz.Id, ":username:" + player.Username + ":answer:" + answer);
+        await _client.SendEventAsync("answer:" + "quizId:" + player.Quiz.Id + ":username:" + player.Username + ":answer:" + answer);
 
         return true;
     }
