@@ -99,7 +99,7 @@ public class QuizService : IQuizService
         var httpClient = _httpClientFactory.CreateClient();
 
         var questions = await httpClient.GetStringAsync("https://the-trivia-api.com/api/questions?limit=20&region=HR&difficulty=easy");
-  
+
         var questionsList = JsonConvert.DeserializeObject<IEnumerable<QuestionFromTriviaDTO>>(questions);
 
         foreach (var question in questionsList)
@@ -123,7 +123,7 @@ public class QuizService : IQuizService
             correctAnswer.IsCorrect = true;
 
             newQuestion.Answers.Add(correctAnswer);
-            
+
             quiz.Questions.Add(newQuestion);
         }
 
