@@ -3,13 +3,11 @@ using quiz.Helpers;
 
 namespace quiz.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class QuizForecastController : ApiBase
+public class QuizController : ApiBase
 {
     private readonly IQuizService _quizService;
 
-    public QuizForecastController(IQuizService quizService)
+    public QuizController(IQuizService quizService)
     {
         _quizService = quizService;
     }
@@ -34,6 +32,22 @@ public class QuizForecastController : ApiBase
     public async Task<IActionResult> EndQuiz(int quizId)
     {
         var success = await _quizService.EndQuiz(quizId);
+
+        return Ok(success);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> NextQuestion(int quizId)
+    {
+        var success = await _quizService.NextQuestion(quizId);
+
+        return Ok(success);
+    }
+
+        [HttpPost]
+    public async Task<IActionResult> SubmitAnswer(string token, string answer)
+    {
+        var success = await _quizService.SubmitAnswer(token, answer);
 
         return Ok(success);
     }

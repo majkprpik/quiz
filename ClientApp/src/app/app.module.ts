@@ -13,9 +13,6 @@ const routes: Routes = [
   {path: 'quiz', component: GameScreenComponent}
 ]
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

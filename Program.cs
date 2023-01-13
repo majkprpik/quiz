@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Lib.AspNetCore.ServerSentEvents;
+using WebApi.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpClient();
 
 builder.Services.AddControllersWithViews();
 
@@ -34,8 +36,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
  {
-
+     options.CustomSchemaIds(type => type.FullName);
  });
+
 
 builder.Services.AddServerSentEvents(options =>
 {
@@ -49,15 +52,14 @@ builder.Services.AddServerSentEvents(options =>
     };
 });
 
+builder.Services.AddHostedService<ServerEventsWorker>();
+
 var app = builder.Build();
 
 app.MapServerSentEvents("sse/rn-updates");
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

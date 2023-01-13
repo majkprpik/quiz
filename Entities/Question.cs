@@ -2,8 +2,13 @@ using quiz.Entities;
 
 public class Question : AuditableBaseEntity
 {
+    public Question()
+    {
+        Answers = new List<Answer>();
+        Quizzes = new List<Quiz>();
+    }
     public string QuestionText { get; set; }
-    public IEnumerable<Answer> Answers { get; set; }
-    public virtual IEnumerable<Quiz> Quizzes { get; set; }
+    public ICollection<Answer> Answers { get; set; }
+    public virtual ICollection<Quiz> Quizzes { get; set; }
 
 }

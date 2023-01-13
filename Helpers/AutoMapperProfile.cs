@@ -6,26 +6,27 @@ namespace quiz.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<Quiz, QuizDTO>()  
+            CreateMap<Quiz, QuizDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Pin, opt => opt.MapFrom(src => src.Pin))
                 .ForMember(dest => dest.Started, opt => opt.MapFrom(src => src.Started))
                 .ForMember(dest => dest.Ended, opt => opt.MapFrom(src => src.Ended))
                 .ForMember(dest => dest.Questions, opt => opt.MapFrom(src => src.Questions.Select(
-                    q => new QuestionDTO
-                    {
-                        Id = q.Id,
-                        QuestionText = q.QuestionText,
-                        Answers = q.Answers.Select(
-                            a => new AnswerDTO
-                            {
-                                Id = a.Id,
-                                AnswerText = a.AnswerText,
-                                IsCorrect = a.IsCorrect
-                            }
-                        )
-                    }
-                )
+                        q => new QuestionDTO
+                        {
+                            Id = q.Id,
+                            QuestionText = q.QuestionText,
+                            Answers = q.Answers.Select(
+                                a => new AnswerDTO
+                                {
+                                    Id = a.Id,
+                                    AnswerText = a.AnswerText,
+                                    AnswerLetter = a.AnswerLetter,
+                                    IsCorrect = a.IsCorrect
+                                }
+                            ).ToList()
+                        }
+                    )
                 ))
                 .ForMember(dest => dest.Players, opt => opt.MapFrom(src => src.Players.Select(
                     p => new PlayerDTO
@@ -36,7 +37,7 @@ namespace quiz.Helpers
                     }
                 )));
 
-            CreateMap<Player, PlayerDTO>()  
+            CreateMap<Player, PlayerDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
                 .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score));
@@ -49,6 +50,7 @@ namespace quiz.Helpers
                     {
                         Id = a.Id,
                         AnswerText = a.AnswerText,
+                        AnswerLetter = a.AnswerLetter,
                         IsCorrect = a.IsCorrect
                     }
                 )));
@@ -56,6 +58,7 @@ namespace quiz.Helpers
             CreateMap<Answer, AnswerDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.AnswerText, opt => opt.MapFrom(src => src.AnswerText))
+                .ForMember(dest => dest.AnswerLetter, opt => opt.MapFrom(src => src.AnswerLetter))
                 .ForMember(dest => dest.IsCorrect, opt => opt.MapFrom(src => src.IsCorrect));
         }
     }
