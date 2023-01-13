@@ -1,3 +1,4 @@
+import { QuestionsService } from './../services/questions.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-screen.component.scss'],
 })
 export class GameScreenComponent implements OnInit {
-  constructor() {}
+  constructor(private questionService: QuestionsService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.questionService.quiz.subscribe((res) => {
+      this.quiz = res;
+    });
+  }
+  quiz;
+  currentAnswers;
+  currentQuestionNo = 0;
+
+  nextQuestion() {
+  }
+
+  showAnswers() {
+  }
+
+  addPoints() {
+  }
+
+
 }

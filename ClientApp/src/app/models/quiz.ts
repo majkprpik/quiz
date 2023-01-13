@@ -1,7 +1,7 @@
 export interface Quiz {
     id:number;
     pin:string;
-    players?:string[];
+    players?:Players[];
     questions?:Question[];
     strated?:boolean;
     ended?:boolean;
@@ -18,4 +18,9 @@ export interface Answer{
     answerText:string;
     answerLetter?:number;
     isCorrect:false
+}
+
+export class Players {
+    username:string;
+    points:number;
 }
