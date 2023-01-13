@@ -1,5 +1,7 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Lib.AspNetCore.ServerSentEvents;
+using WebApi.HostedServices;
 
 public interface IQuizService
 {
@@ -14,6 +16,7 @@ public class QuizService : IQuizService
 {
     private readonly DataContext _context;
     private readonly IMapper _mapper;
+    private readonly IServerSentEventsService _client;
 
 
     public QuizService(DataContext context, IMapper mapper)
@@ -41,8 +44,6 @@ public class QuizService : IQuizService
 
         await _context.SaveChangesAsync();
 
-
-        // TODO send sse to front for new player
 
         return player.Token;
     }
