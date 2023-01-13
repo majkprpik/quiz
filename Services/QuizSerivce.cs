@@ -4,6 +4,7 @@ using System.Text;
 using AutoMapper;
 using Lib.AspNetCore.ServerSentEvents;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 public interface IQuizService
 {
@@ -100,30 +101,32 @@ public class QuizService : IQuizService
 
         var questions = await httpClient.GetStringAsync("https://the-trivia-api.com/api/questions?limit=20&region=HR&difficulty=easy");
   
+        var questionsList = JsonConvert.DeserializeObject<IEnumerable<QuestionFromTriviaDTO>>(questions);
 
-        // if (questions.IsSuccessStatusCode)
-        // {
-        //     using var contentStream =
-        //         await httpResponseMessage.Content.ReadAsStreamAsync();
+        foreach (var question in questionsList)
+        {
+            var newQuestion = new Question();
+
+            newQuestion.QuestionText = question.question;
+
+            foreach (var answer in question.incorrectAnswers)
+            {
+                var newAnswer = new Answer();
+
+                newAnswer.AnswerText = answer;
+                newAnswer.IsCorrect = false;
+
+                newQuestion.Answers.Add(newAnswer);
+            }
+
+            var correctAnswer = new Answer();
+            correctAnswer.AnswerText = question.correctAnswer;
+            correctAnswer.IsCorrect = true;
+
+            newQuestion.Answers.Add(correctAnswer);
             
-        //     GitHubBranches = await JsonSerializer.DeserializeAsync
-        //         <IEnumerable<GitHubBranch>>(contentStream);
-        // }
-
-        // List<QuestionFromTriviaDTO> addressList = JsonConvert.DeserializeObject<List<Address>>(questions);
-        
-        // XmlDocument xmlDoc = new XmlDocument();
-        // xmlDoc.LoadXml(events);
-
-        // var htmlDoc = new HtmlDocument();
-        // htmlDoc.LoadHtml(events);
-
-        // var name = htmlDoc.DocumentNode
-        //     .SelectNodes("//table[@id='main_calendar']")
-        //     .First();
-        //     // .Attributes["value"].Value;
-
-        // System.Console.WriteLine(events);
+            quiz.Questions.Add(newQuestion);
+        }
 
         _context.Quizzes.Add(quiz);
         await _context.SaveChangesAsync();
