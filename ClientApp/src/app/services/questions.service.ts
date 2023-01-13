@@ -19,6 +19,16 @@ export class QuestionsService {
     this.baseUrl=baseUrl;
   }
 
+  addNewPlayer(id:number,username:string){
+
+    
+    if(this.quiz.value.id===id){
+      let temp=this.quiz.value;
+      temp.players.push(username);
+      this.quiz.next(temp);
+    }
+  }
+
   startNewQuiz(){
     this.http.get<Quiz>(this.baseUrl +'api/Quiz/NewQuiz').subscribe(res=>{
      

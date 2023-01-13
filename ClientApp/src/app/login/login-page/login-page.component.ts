@@ -16,6 +16,8 @@ export class LoginPageComponent implements OnInit {
   constructor(private questionsService: QuestionsService) { 
     this.subs.add(
       this.questionsService.quiz.subscribe(quiz=>{
+        console.log(quiz);
+        
         this.pin=quiz.pin;
         this.memberList=quiz.players
       })

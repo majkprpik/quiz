@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { QuestionsService } from './questions.service';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,7 @@ import { Inject, Injectable } from '@angular/core';
 export class SSEService {
   baseUrl: string;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string,private questionService:QuestionsService) {
     this.baseUrl = baseUrl;
     this.initSSE();
   }
@@ -22,7 +23,7 @@ export class SSEService {
         case 'new-player': {
             let quizId = data[1];
             let username = data[3];
-            // call service to add player to quiz
+            this.questionService.addNewPlayer(quizId,username);
             break;
         }
         case 'answer': {
