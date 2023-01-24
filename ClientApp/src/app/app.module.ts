@@ -9,23 +9,19 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login/login-page/login-page.component';
 
 const routes: Routes = [
-  {path: '', component: LoginPageComponent},
-  {path: 'quiz', component: GameScreenComponent}
-]
+  // {path: '', component: LoginPageComponent},
+  // {path: 'quiz', component: GameScreenComponent}
+];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginPageComponent,
-    GameScreenComponent,
-  ],
+  declarations: [AppComponent, LoginPageComponent, GameScreenComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -26,6 +26,8 @@ builder.Services.AddControllersWithViews();
 
     services.AddDbContext<DataContext>();
     services.AddScoped<IQuizService, QuizService>();
+    services.AddScoped<IWordleService, WordleService>();
+
 
     services.AddControllersWithViews()
         .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

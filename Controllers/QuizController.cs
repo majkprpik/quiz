@@ -12,51 +12,51 @@ public class QuizController : ApiBase
         _quizService = quizService;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> NewQuiz()
-    {
-        var quiz = await _quizService.NewQuiz();
+    // [HttpGet]
+    // public async Task<IActionResult> NewQuiz()
+    // {
+    //     var quiz = await _quizService.NewQuiz();
 
-        return Ok(quiz);       
-    }
+    //     return Ok(quiz);       
+    // }
 
-    [HttpGet]
-    public async Task<IActionResult> StartQuiz(int quizId)
-    {
-        var success = await _quizService.StartQuiz(quizId);
+    // [HttpGet]
+    // public async Task<IActionResult> StartQuiz(int quizId)
+    // {
+    //     var success = await _quizService.StartQuiz(quizId);
 
-        return Ok(success);
-    }
+    //     return Ok(success);
+    // }
 
-    [HttpGet]
-    public async Task<IActionResult> EndQuiz(int quizId)
-    {
-        var success = await _quizService.EndQuiz(quizId);
+    // [HttpGet]
+    // public async Task<IActionResult> EndQuiz(int quizId)
+    // {
+    //     var success = await _quizService.EndQuiz(quizId);
 
-        return Ok(success);
-    }
+    //     return Ok(success);
+    // }
 
-    [HttpPost]
-    public async Task<IActionResult> NextQuestion(int quizId)
-    {
-        var success = await _quizService.NextQuestion(quizId);
+    // [HttpPost]
+    // public async Task<IActionResult> NextQuestion(int quizId)
+    // {
+    //     var success = await _quizService.NextQuestion(quizId);
 
-        return Ok(success);
-    }
+    //     return Ok(success);
+    // }
 
-        [HttpPost]
-    public async Task<IActionResult> SubmitAnswer(string token, string answer)
-    {
-        var success = await _quizService.SubmitAnswer(token, answer);
+    //     [HttpPost]
+    // public async Task<IActionResult> SubmitAnswer(string token, string answer)
+    // {
+    //     var success = await _quizService.SubmitAnswer(token, answer);
 
-        return Ok(success);
-    }
+    //     return Ok(success);
+    // }
 
-    [HttpPost]
-    public async Task<IActionResult> AddNewPlayer(string username, string pin)
-    {
-        var token = await _quizService.AddNewPlayer(username, pin);
+    // [HttpPost]
+    // public async Task<IActionResult> AddNewPlayer(string username, string pin)
+    // {
+    //     var token = await _quizService.AddNewPlayer(username, pin);
 
-        return Ok(token);
-    }
+    //     return Ok(token);
+    // }
 }

@@ -9,6 +9,7 @@ import { Quiz } from '../models/quiz';
 })
 export class QuestionsService {
   private baseUrl: string = '';
+
   public quiz: BehaviorSubject<Quiz> = new BehaviorSubject<Quiz>({
     id: 0,
     pin: '',
@@ -17,6 +18,8 @@ export class QuestionsService {
     strated: false,
     ended: false,
   });
+
+  currentAnswers = new BehaviorSubject<{username: string, points: string}[]>([]);
 
   constructor(private http: HttpClient,@Inject('BASE_URL') baseUrl:string ,private router: Router) { 
     this.baseUrl=baseUrl;
@@ -50,6 +53,6 @@ export class QuestionsService {
   }
 
   addAnswer(answer: string, username: string) {
-    
+    this.currentAnswers.next([...this.currentAnswers.value, {username: username, points: answer}]);
   }
 }
